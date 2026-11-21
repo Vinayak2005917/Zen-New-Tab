@@ -1,0 +1,572 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #1b1b1b;
+  background-image: url("./wallpaper.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #fff;
+  font-family: Inter, Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  position: relative;
+  width: min(900px, 90%);
+  height: 100vh;
+  text-align: center;
+}
+
+.search {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: rgba(25, 25, 25, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 50px;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.584);
+  padding: 8px 28px;
+  height: 58px;
+  transform: translateY(-50%);
+  transition: border 0.2s;
+}
+
+.dashboard {
+  position: absolute;
+  bottom: calc(50% + 58px);
+  left: 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  text-align: left;
+}
+
+.clock-block {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 12px;
+  left: -18px;
+}
+
+.clock {
+  display: flex;
+  flex-direction: column;
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(44px, 9vw, 96px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.65);
+  white-space: nowrap;
+  transform: scaleX(0.86) scaleY(1.1);
+  transform-origin: left top;
+}
+
+.clock-minute-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.clock-period {
+  margin-bottom: 28px;
+  font-size: clamp(16px, 2.2vw, 24px);
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.world-times {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(9px, 1.1vw, 12px);
+  line-height: 1.6;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+  white-space: nowrap;
+  transform: scaleY(1.15);
+  transform-origin: left center;
+}
+
+.world-times span {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.world-times strong {
+  color: white;
+  font-weight: 700;
+}
+
+.weather {
+  display: flex;
+  width: 400px;
+  min-height: 170px;
+  align-items: center;
+  gap: 14px;
+  margin-right: 0;
+  padding: 16px 18px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: white;
+  font-size: 13px;
+  text-align: right;
+  cursor: pointer;
+}
+
+.weather-icon {
+  align-self: center;
+  font-size: 58px;
+  line-height: 1;
+}
+
+.weather-current {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 9px;
+  white-space: nowrap;
+}
+
+.weather-current .weather-condition,
+.weather-current .weather-location {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.weather-current .weather-condition {
+  flex: 1;
+}
+
+.weather-current .weather-location {
+  flex: 1;
+}
+
+.weather-details {
+  min-width: 0;
+  flex: 1;
+  display: grid;
+  gap: 5px;
+}
+
+.weather-temperature {
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.weather-location {
+  color: rgba(255,255,255,0.7);
+  font-size: 15px;
+}
+
+.weather-condition {
+  color: rgba(255,255,255,0.88);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.weather-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-top: 7px;
+  padding-top: 8px;
+  border-top: 0;
+  text-align: center;
+}
+
+.weather-meta span {
+  display: grid;
+  gap: 2px;
+  color: rgba(255,255,255,0.58);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.weather-meta strong {
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.weather-extremes {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+.shortcuts {
+  position: absolute;
+  top: calc(50% + 58px);
+  left: 0;
+  width: 100%;
+}
+
+.search:focus-within {
+  border-color: rgba(255, 255, 255, 0.104);
+}
+
+.search input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 16px;
+  min-width: 0;
+}
+
+.search input::placeholder {
+  color: rgba(255,255,255,0.55);
+}
+
+.search button {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.shortcuts {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.shortcut-item {
+  position: relative;
+  width: 76px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.shortcut-item.is-dragging {
+  position: fixed;
+  z-index: 3;
+  width: 76px;
+  opacity: 0.92;
+  pointer-events: none;
+  cursor: grabbing;
+  will-change: transform;
+}
+
+.shortcut-placeholder {
+  flex: 0 0 76px;
+  width: 76px;
+  min-height: 76px;
+}
+
+.shortcut-item.is-dragging .shortcut {
+  transform: none;
+  cursor: grabbing;
+}
+
+.shortcut {
+  display: flex;
+  min-height: 76px;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  color: rgba(255,255,255,0.8);
+  font-size: 12px;
+}
+
+.shortcut:hover {
+  color: white;
+}
+
+.shortcut img {
+  width: 55px;
+  height: 55px;
+  border-radius: 10px;
+  padding: 4px;
+  background: #27282ab2;
+}
+
+.add-shortcut-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.1);
+  padding: 8px;
+}
+
+.shortcut-menu-button {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(25,25,25,0.9);
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.shortcut-item:hover .shortcut-menu-button,
+.shortcut-menu-button:focus-visible,
+.shortcut-menu-button[aria-expanded="true"] {
+  opacity: 1;
+}
+
+.shortcut-menu {
+  position: absolute;
+  z-index: 2;
+  top: 34px;
+  right: -8px;
+  width: 104px;
+  min-width: 104px;
+  padding: 4px;
+  border: 0;
+  border-radius: 10px;
+  background: #1c1c1c;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.24);
+}
+
+.shortcut-menu button {
+  width: 100%;
+  min-height: 34px;
+  padding: 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+}
+
+.shortcut-menu button:hover,
+.shortcut-menu button:focus-visible {
+  background: rgba(255,255,255,0.12);
+}
+
+.shortcut-menu .remove-shortcut {
+  color: #ff9a9a;
+}
+
+.add-shortcut {
+  display: flex;
+  width: 76px;
+  min-height: 76px;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.add-shortcut:hover,
+.add-shortcut:focus-visible {
+  color: white;
+}
+
+.add-shortcut-icon {
+  display: grid;
+  width: 55px;
+  height: 55px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: #212223;
+  font-size: 38px;
+  line-height: 1;
+}
+
+.shortcut-dialog {
+  width: min(560px, calc(100% - 32px));
+  margin: auto;
+  padding: 24px;
+  border: 0;
+  border-radius: 16px;
+  background: #242424;
+  color: white;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.38);
+  transform: translateY(24px);
+}
+
+.shortcut-dialog::backdrop {
+  background: rgba(0,0,0,0.38);
+  backdrop-filter: blur(2px);
+}
+
+.shortcut-dialog h2 {
+  font-size: 18px;
+}
+
+.shortcut-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.shortcut-dialog-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: contain;
+  padding: 3px;
+  background: rgba(255,255,255,0.1);
+}
+
+.shortcut-dialog label {
+  display: block;
+  margin: 12px 0 6px;
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+  text-align: left;
+}
+
+.shortcut-dialog input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  outline: none;
+  background: rgba(0,0,0,0.16);
+  color: white;
+  font: inherit;
+}
+
+.shortcut-dialog input:focus {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.32);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.dialog-actions button {
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.dialog-actions button[type="submit"] {
+  border-color: white;
+  background: white;
+  color: #222;
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    gap: 8px;
+  }
+
+  .clock-block {
+    top: 8px;
+    left: -10px;
+  }
+
+  .clock {
+    font-size: 40px;
+    letter-spacing: 0;
+    transform: scaleX(0.88) scaleY(1.08);
+  }
+
+  .clock-period {
+    margin-bottom: 12px;
+  }
+
+  .world-times {
+    gap: 14px;
+    margin-top: 8px;
+    font-size: 8px;
+    line-height: 1.5;
+  }
+
+  .weather {
+    width: 240px;
+    min-height: 128px;
+    gap: 9px;
+    margin-right: 0;
+    padding: 12px 13px;
+  }
+
+  .weather-icon {
+    font-size: 38px;
+  }
+
+  .weather-temperature {
+    font-size: 34px;
+  }
+
+  .weather-location {
+    font-size: 12px;
+  }
+
+  .weather-condition {
+    font-size: 14px;
+  }
+
+  .weather-meta {
+    gap: 3px;
+  }
+
+  .weather-meta span {
+    font-size: 9px;
+  }
+
+  .weather-meta strong {
+    font-size: 11px;
+  }
+}
+
+@media (hover: none) {
+  .shortcut-menu-button {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .add-shortcut {
+    transition-duration: 0.01ms;
+  }
+}

@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="./logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<title>New Tab</title>
+
+<link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+
+<main class="container">
+
+  <section class="dashboard" aria-label="Time and weather">
+    <div class="clock-block">
+      <time class="clock" id="clock" aria-label="Current time">
+        <span id="clockHour"></span>
+        <span class="clock-minute-row">
+          <span id="clockMinute"></span>
+          <span class="clock-period" id="clockPeriod">AM</span>
+        </span>
+      </time>
+      <div class="world-times" aria-label="GMT and Texas times">
+        <span>GMT <strong id="gmtTime">--:--</strong></span>
+        <span>Texas <strong id="texasTime">--:--</strong></span>
+      </div>
+    </div>
+    <div class="weather" id="weather" role="button" tabindex="0" title="Click to update weather" aria-label="Update weather" aria-live="polite">
+      <div class="weather-details">
+        <div class="weather-current">
+          <span class="weather-icon" id="weatherIcon" aria-hidden="true">☁</span>
+          <span class="weather-temperature" id="weatherTemperature">--°</span>
+          <span class="weather-condition" id="weatherCondition">Loading weather</span>
+          <span class="weather-location" id="weatherLocation">Location not set</span>
+        </div>
+        <div class="weather-meta">
+          <span>Feels<strong id="weatherFeels">--</strong></span>
+          <span>Humidity<strong id="weatherHumidity">--</strong></span>
+          <span>Wind<strong id="weatherWind">--</strong></span>
+        </div>
+        <div class="weather-meta weather-extremes">
+          <span>High<strong id="weatherHigh">--</strong></span>
+          <span>Low<strong id="weatherLow">--</strong></span>
+          <span>Rain<strong id="weatherRain">--</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <form class="search" id="searchForm">
+    <input
+      id="query"
+      type="text"
+      placeholder="Search..."
+      autocomplete="off"
+      autofocus
+    >
+  </form>
+
+  <div class="shortcuts" id="shortcuts" aria-label="Shortcuts"></div>
+
+  <dialog class="shortcut-dialog" id="shortcutDialog" aria-labelledby="shortcutDialogTitle">
+    <form id="shortcutForm">
+      <div class="shortcut-dialog-header">
+        <img class="shortcut-dialog-icon" id="shortcutDialogIcon" alt="" hidden>
+        <h2 id="shortcutDialogTitle">Add</h2>
+      </div>
+      <label for="shortcutName">Name</label>
+      <input id="shortcutName" name="name" required maxlength="32" autocomplete="off">
+      <label for="shortcutUrl">Website URL</label>
+      <input id="shortcutUrl" name="url" type="url" required placeholder="https://example.com" autocomplete="url">
+      <div class="dialog-actions">
+        <button type="button" id="cancelShortcut">Cancel</button>
+        <button type="submit">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+</main>
+
+<script src="./script.js"></script>
+
+</body>
+</html>
