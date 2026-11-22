@@ -21,10 +21,12 @@ checkpointer.setup()
 with open("System_prompt.md", "r", encoding="utf-8") as file:
     Sys_prompt = file.read()
 
+from tools import get_hacker_news, get_space_news, get_upcoming_launches
+
 agent = create_agent(
     model=model,
     system_prompt=Sys_prompt,
-    tools=[save_memory, recall_memories],
+    tools=[save_memory, recall_memories, get_hacker_news, get_space_news, get_upcoming_launches],
     checkpointer=checkpointer,
 )
 
