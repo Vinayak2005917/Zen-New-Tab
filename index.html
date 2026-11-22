@@ -53,15 +53,34 @@
     </div>
   </section>
 
-  <form class="search" id="searchForm">
-    <input
-      id="query"
-      type="text"
-      placeholder="Search..."
-      autocomplete="off"
-      autofocus
-    >
-  </form>
+  <div class="agent-blur" id="agentBlur" aria-hidden="true"></div>
+
+  <div class="search-row">
+    <div class="search-mode" role="group" aria-label="Search mode">
+      <button class="search-mode-option is-active" type="button" data-mode="search" aria-label="Search" title="Search" aria-pressed="true">
+        <svg class="mode-icon google-mode-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#4285F4" d="M23.49 12.27c0-.78-.07-1.53-.2-2.27H12v4.51h6.44a5.5 5.5 0 0 1-2.39 3.61v3h3.87c2.27-2.09 3.57-5.17 3.57-8.85Z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.96-1.08 7.95-2.88l-3.87-3c-1.08.72-2.46 1.15-4.08 1.15-3.13 0-5.78-2.11-6.73-4.95H1.27v3.09A12 12 0 0 0 12 24Z"/>
+          <path fill="#FBBC05" d="M5.27 14.32a7.2 7.2 0 0 1 0-4.64V6.59H1.27a12 12 0 0 0 0 10.82l4-3.09Z"/>
+          <path fill="#EA4335" d="M12 4.73c1.77 0 3.35.61 4.6 1.81l3.44-3.44C17.95 1.16 15.24 0 12 0A12 12 0 0 0 1.27 6.59l4 3.09c.95-2.84 3.6-4.95 6.73-4.95Z"/>
+        </svg>
+      </button>
+      <button class="search-mode-option" type="button" data-mode="agent" aria-label="Agent" title="Agent" aria-pressed="false">
+        <img class="mode-icon agent-mode-icon" src="./logo.png" alt="">
+      </button>
+    </div>
+    <form class="search" id="searchForm">
+      <input
+        id="query"
+        type="text"
+        placeholder="Search..."
+        autocomplete="off"
+        autofocus
+      >
+    </form>
+  </div>
+
+  <section class="agent-response" id="agentResponse" aria-live="polite" hidden></section>
 
   <div class="shortcuts" id="shortcuts" aria-label="Shortcuts"></div>
 

@@ -1,5 +1,10 @@
 const form = document.getElementById("searchForm");
 const input = document.getElementById("query");
+const searchModeButtons = Array.from(document.querySelectorAll(".search-mode-option"));
+const agentResponse = document.getElementById("agentResponse");
+const agentBlur = document.getElementById("agentBlur");
+const container = document.querySelector(".container");
+let searchMode = "search";
 const clockElement = document.getElementById("clock");
 const clockHour = document.getElementById("clockHour");
 const clockMinute = document.getElementById("clockMinute");
@@ -39,6 +44,21 @@ let dragStartY = 0;
 let dragStartLeft = 0;
 let dragStartTop = 0;
 let suppressShortcutClick = false;
+
+function positionAgentBlur() {
+  const containerRect = container.getBoundingClientRect();
+  const searchRect = form.getBoundingClientRect();
+  // Begin the blur behind the search field, then let it expand below the viewport.
+  const top = Math.max(0, searchRect.top - containerRect.top - 2);
+  agentBlur.style.left = `${searchRect.left - containerRect.left}px`;
+  agentBlur.style.top = `${top}px`;
+  agentBlur.style.width = `${searchRect.width}px`;
+  agentBlur.style.height = `${Math.max(0, containerRect.height - top + window.innerHeight * 0.34)}px`;
+}
+
+window.addEventListener("resize", () => {
+  if (container.classList.contains("has-agent-response")) positionAgentBlur();
+});
 
 function updateClock() {
   const now = new Date();
@@ -493,10 +513,46 @@ function updateShortcutDialogIcon(url) {
   }
 }
 
-form.addEventListener("submit", (e) => {
+searchModeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    searchMode = button.dataset.mode;
+    searchModeButtons.forEach((option) => {
+      const active = option === button;
+      option.classList.toggle("is-active", active);
+      option.setAttribute("aria-pressed", String(active));
+    });
+    input.placeholder = searchMode === "agent" ? "Ask the agent..." : "Search...";
+    agentResponse.hidden = true;
+    container.classList.remove("has-agent-response");
+    input.focus();
+  });
+});
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const query = input.value.trim();
-  if (query) {
+  if (!query) return;
+
+  if (searchMode === "agent") {
+    positionAgentBlur();
+    agentResponse.hidden = false;
+    container.classList.add("has-agent-response");
+    agentResponse.textContent = "Thinking…";
+    input.disabled = true;
+    try {
+      const response = await fetch(
+        `http://localhost:8000/chat?message=${encodeURIComponent(query)}`
+      );
+      if (!response.ok) throw new Error(`Request failed (${response.status})`);
+      const data = await response.json();
+      agentResponse.textContent = data.response ?? "The agent returned no response.";
+    } catch (error) {
+      agentResponse.textContent = `Could not reach the agent. Make sure it is running at http://localhost:8000. ${error.message}`;
+    } finally {
+      input.disabled = false;
+      input.focus();
+    }
+  } else {
     window.location.href =
       "https://www.google.com/search?q=" + encodeURIComponent(query);
   }
