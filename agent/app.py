@@ -12,9 +12,13 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
+@app.get("/")
+async def health():
+    return {"status": "ok", "service": "zen-new-tab-agent"}
+
 @app.get("/chat")
 async def chat_endpoint(message: str):
-    response = chat(message)
+    response = await chat(message)
     return {"response": response}
 
 

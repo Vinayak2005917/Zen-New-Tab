@@ -30,8 +30,8 @@ agent = create_agent(
     checkpointer=checkpointer,
 )
 
-def chat(message: str):
-    result = agent.invoke(
+async def chat(message: str):
+    result = await agent.ainvoke(
         {"messages": [{"role": "user", "content": message}]},
         config={"configurable": {"thread_id": "main-user"}}
     )
@@ -40,10 +40,11 @@ def chat(message: str):
 
 
 if __name__ == "__main__":
+    import asyncio
     while True:
         try:
             msg = input("You: ")
         except KeyboardInterrupt:
             print("Exiting...")
             break
-        print("Agent:", chat(msg))
+        print("Agent:", asyncio.run(chat(msg)))

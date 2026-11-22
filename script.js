@@ -549,7 +549,7 @@ form.addEventListener("submit", async (e) => {
 
       for (const endpoint of endpoints) {
         try {
-          const response = await fetch(`${endpoint}/chat?message=${message}`);
+          const response = await fetch(`${endpoint}/chat?message=${encodeURIComponent(message)}`);
           if (!response.ok) throw new Error(`Request failed (${response.status})`);
           const data = await response.json();
           agentResponse.textContent = data.response ?? "The agent returned no response.";
