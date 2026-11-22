@@ -540,14 +540,28 @@ form.addEventListener("submit", async (e) => {
     agentResponse.textContent = "Thinking…";
     input.disabled = true;
     try {
-      const response = await fetch(
-        `http://localhost:8000/chat?message=${encodeURIComponent(query)}`
-      );
-      if (!response.ok) throw new Error(`Request failed (${response.status})`);
-      const data = await response.json();
-      agentResponse.textContent = data.response ?? "The agent returned no response.";
+      const message = encodeURIComponent(query);
+      const endpoints = [
+        "https://zen-new-tab.onrender.com",
+        "http://localhost:8000"
+      ];
+      const failures = [];
+
+      for (const endpoint of endpoints) {
+        try {
+          const response = await fetch(`${endpoint}/chat?message=${message}`);
+          if (!response.ok) throw new Error(`Request failed (${response.status})`);
+          const data = await response.json();
+          agentResponse.textContent = data.response ?? "The agent returned no response.";
+          return;
+        } catch (error) {
+          failures.push(`${endpoint}: ${error.message}`);
+        }
+      }
+
+      agentResponse.textContent = `Could not reach the agent. Tried the hosted service and local fallback. ${failures.join("; ")}`;
     } catch (error) {
-      agentResponse.textContent = `Could not reach the agent. Make sure it is running at http://localhost:8000. ${error.message}`;
+      agentResponse.textContent = `Could not reach the agent. ${error.message}`;
     } finally {
       input.disabled = false;
       input.focus();
