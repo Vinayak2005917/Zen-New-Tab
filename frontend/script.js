@@ -542,7 +542,7 @@ form.addEventListener("submit", async (e) => {
     try {
       const message = encodeURIComponent(query);
       const endpoints = [
-        "https://zen-new-tab.onrender.com",
+        "https://zen-new-tab-1.onrender.com",
         "http://localhost:8000"
       ];
       const failures = [];
