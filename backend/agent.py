@@ -17,7 +17,7 @@ async def Setup():
     checkpointer, db_connection = await connect_checkpointer()
 
     model = ChatOpenAI(
-        model="meta/muse-ember",
+        model="openai/gpt-6-luna",
         base_url="https://api.aicredits.in/v1",
         api_key=os.getenv("OPENAI_API_KEY")
     )
@@ -33,10 +33,16 @@ async def Setup():
 
 async def chat(message: str):
     agent = await Setup()
-    result = await agent.ainvoke(
-        {"messages": [{"role": "user", "content": message}]},
-        config={"configurable": {"thread_id": "main-user"}}
-    )
+    try:
+        result = await agent.ainvoke(
+            {"messages": [{"role": "user", "content": message}]},
+            config={"configurable": {"thread_id": "sana"}}
+        )
+    except Exception as exc:
+        provider_body = getattr(exc, "body", None)
+        response = getattr(exc, "response", None)
+        if response is not None:
+            provider_body = response.text
     return result["messages"][-1].content
 
 
