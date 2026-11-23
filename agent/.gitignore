@@ -1,5 +1,4 @@
 .venv
 __pycache__
 .env
-memories.db
-agent.db
+.uv-cache
