@@ -1,6 +1,7 @@
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
 from tools import get_hacker_news, get_space_news, get_upcoming_launches
+from memory import add_to_memory, get_memory
 from dotenv import load_dotenv
 import asyncio
 import selectors
@@ -17,7 +18,7 @@ async def Setup():
     checkpointer, db_connection = await connect_checkpointer()
 
     model = ChatOpenAI(
-        model="openai/gpt-6-luna",
+        model="meta/muse-ember",
         base_url="https://api.aicredits.in/v1",
         api_key=os.getenv("OPENAI_API_KEY")
     )
@@ -25,7 +26,7 @@ async def Setup():
     agent = create_agent(
         model=model,
         system_prompt=Sys_prompt,
-        tools=[get_hacker_news, get_space_news, get_upcoming_launches],
+        tools=[add_to_memory, get_memory, get_hacker_news, get_space_news, get_upcoming_launches],
         checkpointer=checkpointer,
     )
 
@@ -36,14 +37,12 @@ async def chat(message: str):
     try:
         result = await agent.ainvoke(
             {"messages": [{"role": "user", "content": message}]},
-            config={"configurable": {"thread_id": "sana"}}
-        )
-    except Exception as exc:
-        provider_body = getattr(exc, "body", None)
-        response = getattr(exc, "response", None)
-        if response is not None:
-            provider_body = response.text
-    return result["messages"][-1].content
+            config={"configurable": {"thread_id": "Testing-1"}})
+        return result["messages"][-1].content
+    except Exception:
+        import traceback
+        traceback.print_exc()
+        raise
 
 
 async def shutdown():
