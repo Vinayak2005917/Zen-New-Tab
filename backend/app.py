@@ -13,6 +13,10 @@ app.add_middleware(
 )
 
 @app.get("/")
+async def head():
+    return {"status": "ok"}
+
+@app.get("/health")
 async def health():
     return {"status": "ok"}
 
