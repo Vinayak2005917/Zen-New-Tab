@@ -14,7 +14,7 @@ app.add_middleware(
 
 @app.get("/")
 async def health():
-    return {"status": "ok", "service": "zen-new-tab-agent"}
+    return {"status": "ok"}
 
 @app.get("/chat")
 async def chat_endpoint(message: str):
