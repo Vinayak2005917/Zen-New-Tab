@@ -21,8 +21,8 @@ async def health():
     return {"status": "ok"}
 
 @app.get("/chat")
-async def chat_endpoint(message: str):
-    response = await chat(message)
+async def chat_endpoint(message: str, thread_id: str = "main-user"):
+    response = await chat(message, thread_id=thread_id)
     return {"response": response}
 
 
