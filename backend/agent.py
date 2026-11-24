@@ -32,12 +32,12 @@ async def Setup():
 
     return agent
 
-async def chat(message: str):
+async def chat(message: str, thread_id: str) -> str:
     agent = await Setup()
     try:
         result = await agent.ainvoke(
             {"messages": [{"role": "user", "content": message}]},
-            config={"configurable": {"thread_id": "Testing-1"}})
+            config={"configurable": {"thread_id": thread_id}})
         return result["messages"][-1].content
     except Exception:
         import traceback
